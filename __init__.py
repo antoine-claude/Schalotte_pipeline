@@ -29,7 +29,7 @@ def register():
     for cls in classes:
         bpy.utils.register_class(cls)
 
-    bpy.types.Scene.check_items = bpy.props.CollectionProperty(type=check_is_manifold.CheckItem)
+    bpy.types.Scene.check_items = bpy.props.CollectionProperty(type=ops.CheckItem)
 
 def unregister():
     for cls in reversed(classes):
