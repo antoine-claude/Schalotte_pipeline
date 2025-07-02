@@ -22,8 +22,11 @@ def register():
     classes = (
         ops.CheckItem,
         ops.OBJECT_OT_run_check,
-        ops.OBJECT_OT_check_manifold,
-        panel_ui.VIEW3D_PT_check_panel,
+        ops.OBJECT_OT_select_manifold,
+        ops.OBJECT_OT_select_vert_dupli,
+        ops.OBJECT_OT_select_normal,
+        ops.OBJECT_OT_select_invalid_poly,
+        panel_ui.VIEW3D_PT_check_panel
     )
 
     for cls in classes:
