@@ -67,29 +67,27 @@ class VIEW3D_PT_check_panel(bpy.types.Panel):
                         if item.clean_normal :
                             col = box.column()
                             row = col.row()
-                            row.label(text=f"Normal badly oriented : {item.clean_normal}", icon = "NORMALS_FACE"), 
+                            row.label(text=f"Normal badly oriented : {item.clean_normal}", icon = "NORMALS_FACE") 
                             op = row.operator("object.select_normal",icon ="RESTRICT_SELECT_OFF")
-                            op.target_name = item.object_name     
-                            op.select = True
-                            op.flip = False
+                            op.target_name = item.object_name 
 
                         if item.is_ngone :
                             col = box.column()
                             row = col.row()
-                            row.label(text=f"Normal badly oriented : {item.is_ngone}", icon = "NORMALS_FACE") 
+                            row.label(text=f"Ngone : {item.is_ngone}", icon = "NORMALS_FACE") 
                             if item.is_ngone : 
                                 op = row.operator("object.select_invalid_poly",icon ="RESTRICT_SELECT_OFF")
-                                op.target_name = item.object_name     
-                                op.select = 'ngone'
+                                op.target_name = item.object_name      
+                                op.shape = 'ngone'
 
                         if item.is_tri :
                             col = box.column()
                             row = col.row()
-                            row.label(text=f"Normal badly oriented : {item.is_tri}", icon = "NORMALS_FACE") 
+                            row.label(text=f"Trigone : {item.is_tri}", icon = "NORMALS_FACE") 
                             if item.is_tri : 
                                 op = row.operator("object.select_invalid_poly",icon ="RESTRICT_SELECT_OFF")
-                                op.target_name = item.object_name     
-                                op.select = 'tri'
+                                op.target_name = item.object_name  
+                                op.shape = 'tri'
                         
                         if item.is_hide :
                             col = box.column()
@@ -99,7 +97,8 @@ class VIEW3D_PT_check_panel(bpy.types.Panel):
                         if item.is_anim :
                             col = box.column()
                             row = col.row()
-                            row.label(text=f"Item animated", icon = "KEYTYPE_KEYFRAME_VEC")
-
+                            row.label(text=f"Item animated", icon = "KEYTYPE_KEYFRAME_VEC"),
+                            op = row.operator("object.clean_anim", icon="TRASH")
+                            op.target_name = item.object_name
 
         layout.operator("object.run_check", text="Vérifier tous les objets")

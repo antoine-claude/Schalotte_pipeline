@@ -103,7 +103,6 @@ class OBJECT_OT_select_normal(bpy.types.Operator):
     bl_label = ""
     
     target_name: bpy.props.StringProperty()
-    select: bpy.props.BoolProperty(default=False)
     flip: bpy.props.BoolProperty(default=False)
 
     def execute(self, context):
@@ -112,7 +111,7 @@ class OBJECT_OT_select_normal(bpy.types.Operator):
             self.report({'ERROR'}, f"Objet introuvable : {self.target_name}")
             return {'CANCELLED'}
         
-        utils.flip_face_if_not_contiguous(obj, select, flip)
+        utils.flip_face_if_not_contiguous(obj, select=True, flip=self.flip)
 
         return {'FINISHED'}
     
@@ -121,8 +120,7 @@ class OBJECT_OT_select_invalid_poly(bpy.types.Operator):
     bl_label = ""
     
     target_name: bpy.props.StringProperty()
-    select: bpy.props.BoolProperty(default=False)
-    poly: bpy.props.StringProperty()
+    shape: bpy.props.StringProperty()
 
     def execute(self, context):
         obj = bpy.data.objects.get(self.target_name)
@@ -130,6 +128,22 @@ class OBJECT_OT_select_invalid_poly(bpy.types.Operator):
             self.report({'ERROR'}, f"Objet introuvable : {self.target_name}")
             return {'CANCELLED'}
         
-        utils.is_polygon_valid(obj, select=True, type=poly)
+        utils.is_polygon_valid(obj, select=True, type=self.shape)
+
+        return {'FINISHED'}
+
+class OBJECT_OT_clean_anim(bpy.types.Operator):
+    bl_idname = "object.clean_anim"
+    bl_label = ""
+    
+    target_name: bpy.props.StringProperty()
+
+    def execute(self, context):
+        obj = bpy.data.objects.get(self.target_name)
+        if not obj:
+            self.report({'ERROR'}, f"Objet introuvable : {self.target_name}")
+            return {'CANCELLED'}
+        
+        obj.animation_data_clear()
 
         return {'FINISHED'}
