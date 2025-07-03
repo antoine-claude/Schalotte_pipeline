@@ -23,7 +23,7 @@ def rehide(obj: bpy.types.Object):
         obj.hide_set(state["eye"])
         obj.hide_viewport = state["view"]
         
-def select_function(obj):
+def select_function(obj: bpy.types.Object):
     unhide(obj)
     if bpy.context.object: 
         old_obj = bpy.context.object
@@ -38,7 +38,7 @@ def select_function(obj):
     bpy.context.view_layer.objects.active = obj
     bpy.context.view_layer.update()
 
-def is_object_in_collection_and_subcollections(obj, coll):
+def is_object_in_collection_and_subcollections(obj: bpy.types.Object, coll):
     collections_to_check = [coll] + list(coll.children_recursive)   
     for c in collections_to_check:
         if obj.name in c.objects:
@@ -76,22 +76,42 @@ def IsInCollection(Object: bpy.types.Object):
             return not obj in bpy.data.collections[:]
 
 
-def IsOnWorldOrigin(Object: bpy.types.Object):
-    return math.isclose(Object.location[0], 0, abs_tol=THRESHOLD) and \
-           math.isclose(Object.location[1], 0, abs_tol=THRESHOLD) and \
-           math.isclose(Object.location[2], 0, abs_tol=THRESHOLD)
+def IsOnWorldOrigin(obj: bpy.types.Object):
+    return math.isclose(obj.location[0], 0, abs_tol=THRESHOLD) and \
+           math.isclose(obj.location[1], 0, abs_tol=THRESHOLD) and \
+           math.isclose(obj.location[2], 0, abs_tol=THRESHOLD)
 
-def IsScaleApplied(Object: bpy.types.Object):
-    return math.isclose(Object.scale[0], 1, abs_tol=THRESHOLD) and \
-           math.isclose(Object.scale[1], 1, abs_tol=THRESHOLD) and \
-           math.isclose(Object.scale[2], 1, abs_tol=THRESHOLD)
+def IsScaleApplied(obj: bpy.types.Object):
+    return math.isclose(obj.scale[0], 1, abs_tol=THRESHOLD) and \
+           math.isclose(obj.scale[1], 1, abs_tol=THRESHOLD) and \
+           math.isclose(obj.scale[2], 1, abs_tol=THRESHOLD)
 
-def IsRotationApplied(Object: bpy.types.Object):
-    return math.isclose(Object.rotation_euler[0], 0, abs_tol=THRESHOLD) and \
-           math.isclose(Object.rotation_euler[1], 0, abs_tol=THRESHOLD) and \
-           math.isclose(Object.rotation_euler[2], 0, abs_tol=THRESHOLD)
+def IsRotationApplied(obj: bpy.types.Object):
+    return math.isclose(obj.rotation_euler[0], 0, abs_tol=THRESHOLD) and \
+           math.isclose(obj.rotation_euler[1], 0, abs_tol=THRESHOLD) and \
+           math.isclose(obj.rotation_euler[2], 0, abs_tol=THRESHOLD)
 
-def is_vertex_manifold(obj, select=False):
+def is_animated(obj: bpy.types.Object) :
+    anim = obj.animation_data
+    print("test check anim")
+    if anim:
+        has_action = anim.action is not None
+        has_drivers = len(anim.drivers) > 0
+        has_nla = any(len(t.strips) > 0 for t in anim.nla_tracks)
+
+        if not (has_action or has_drivers or has_nla):
+            obj.animation_data_clear()
+            print("Bloc animation_data présent mais totalement vide et inutile.")
+            return False
+        else:
+            print("Bloc animation_data contient encore des données utiles.")
+            return True
+    else : 
+        return False
+
+
+
+def is_vertex_manifold(obj: bpy.types.Object, select=False):
     if obj.type != 'MESH':
         return []
 
@@ -122,7 +142,7 @@ def is_vertex_manifold(obj, select=False):
 
     return indices
 
-def is_vertex_overlap(obj, threshold=1e-5, select=False):
+def is_vertex_overlap(obj: bpy.types.Object, threshold=1e-5, select=False):
     if obj.type != 'MESH':
         return []
 
@@ -165,7 +185,7 @@ def is_vertex_overlap(obj, threshold=1e-5, select=False):
 
     return indices
 
-def flip_face_if_not_contiguous(obj, select=False, flip=False):
+def flip_face_if_not_contiguous(obj: bpy.types.Object, select=False, flip=False):
     if obj.type != 'MESH':
         return 0
 
@@ -208,7 +228,7 @@ def flip_face_if_not_contiguous(obj, select=False, flip=False):
 
     return normal_count
 
-def is_polygon_valid(obj, select=False, type="tri"):
+def is_polygon_valid(obj: bpy.types.Object, select=False, type="tri"):
     if obj.type != 'MESH':
         return 0
 
@@ -251,7 +271,7 @@ def is_polygon_valid(obj, select=False, type="tri"):
 
     return tri_count if type == 'tri' else ngone_count
 
-def has_uv_overlap(obj):
+def has_uv_overlap(obj: bpy.types.Object):
     if obj.type != 'MESH':
         return False
 

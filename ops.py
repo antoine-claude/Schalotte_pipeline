@@ -17,7 +17,8 @@ class CheckItem(bpy.types.PropertyGroup):
     is_hide: bpy.props.BoolProperty()
     clean_normal: bpy.props.IntProperty()
     is_ngone: bpy.props.IntProperty() 
-    is_tri: bpy.props.IntProperty() 
+    is_tri: bpy.props.IntProperty()
+    is_anim: bpy.props.BoolProperty()
 #    is_valid: bpy.props.BoolProperty()
 
 #Class check all object if they are non manifold
@@ -45,6 +46,7 @@ class OBJECT_OT_run_check(bpy.types.Operator):
             item.is_ngone = utils.is_polygon_valid(obj, type='ngone')
             item.is_tri = utils.is_polygon_valid(obj, type='tri')
             item.is_hide = obj.hide_get() or obj.hide_viewport
+            item.is_anim = utils.is_animated(obj)
 
             result = utils.is_vertex_manifold(obj, False)
             if result:

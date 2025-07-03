@@ -96,5 +96,10 @@ class VIEW3D_PT_check_panel(bpy.types.Panel):
                             row = col.row()
                             row.label(text=f"Item hidden", icon = "HIDE_OFF")
 
+                        if item.is_anim :
+                            col = box.column()
+                            row = col.row()
+                            row.label(text=f"Item animated", icon = "KEYTYPE_KEYFRAME_VEC")
+
 
         layout.operator("object.run_check", text="Vérifier tous les objets")
