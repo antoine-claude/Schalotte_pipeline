@@ -26,6 +26,7 @@ def register():
         ops.OBJECT_OT_select_vert_dupli,
         ops.OBJECT_OT_select_normal,
         ops.OBJECT_OT_select_invalid_poly,
+        ops.OBJECT_OT_clean_anim,
         panel_ui.VIEW3D_PT_check_panel
     )
 
