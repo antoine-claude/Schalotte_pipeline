@@ -37,18 +37,27 @@ class OBJECT_OT_run_check(bpy.types.Operator):
             item = scene.check_items.add()
             item.object_name = obj.name
             # item.is_collection = utils.IsInCollection(obj)
-            item.is_origin = not utils.IsOnWorldOrigin(obj)
-            item.is_rot = not utils.IsRotationApplied(obj)
-            item.is_scale = not utils.IsScaleApplied(obj)
-            item.uv_overlap = utils.has_uv_overlap(obj)
-            item.vert_overlap = len(utils.is_vertex_overlap(obj))
-            item.clean_normal = utils.flip_face_if_not_contiguous(obj)
-            item.is_ngone = utils.is_polygon_valid(obj, type='ngone')
-            item.is_tri = utils.is_polygon_valid(obj, type='tri')
-            item.is_hide = obj.hide_get() or obj.hide_viewport
-            item.is_anim = utils.is_animated(obj)
+            if scene.checkbox_transform:
+                item.is_origin = not utils.IsOnWorldOrigin(obj)
+                item.is_rot = not utils.IsRotationApplied(obj)
+                item.is_scale = not utils.IsScaleApplied(obj)
+            if scene.checkbox_uv:
+                item.uv_overlap = utils.has_uv_overlap(obj)
+            if scene.checkbox_vert_overlap:
+                item.vert_overlap = len(utils.is_vertex_overlap(obj))
+            if scene.checkbox_normal:
+                item.clean_normal = utils.flip_face_if_not_contiguous(obj)
+            if scene.checkbox_ngone :
+                item.is_ngone = utils.is_polygon_valid(obj, type='ngone')
+                item.is_tri = utils.is_polygon_valid(obj, type='tri')
+            if scene.checkbox_hide:
+                item.is_hide = obj.hide_get() or obj.hide_viewport
+            if scene.checkbox_anim:
+                item.is_anim = utils.is_animated(obj)
 
-            result = utils.is_vertex_manifold(obj, False)
+            result = None
+            if  scene.checkbox_mani :
+                result = utils.is_vertex_manifold(obj, False)
             if result:
                 item.vert_mani = len(result)
                 item.vert_count = len(obj.data.vertices)

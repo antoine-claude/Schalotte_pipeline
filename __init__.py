@@ -34,8 +34,25 @@ def register():
         bpy.utils.register_class(cls)
 
     bpy.types.Scene.check_items = bpy.props.CollectionProperty(type=ops.CheckItem)
+    bpy.types.Scene.checkbox_mani = bpy.props.BoolProperty(name="Check Manifold", default=True)
+    bpy.types.Scene.checkbox_transform = bpy.props.BoolProperty(name="Check Transform", default=True)
+    bpy.types.Scene.checkbox_uv = bpy.props.BoolProperty(name="Check UV", default=True)
+    bpy.types.Scene.checkbox_vert_overlap = bpy.props.BoolProperty(name="Check Vertice Overlap", default=True)
+    bpy.types.Scene.checkbox_normal = bpy.props.BoolProperty(name="Check Normal", default=True)
+    bpy.types.Scene.checkbox_ngone = bpy.props.BoolProperty(name="Check Ngone", default=True)
+    bpy.types.Scene.checkbox_hide = bpy.props.BoolProperty(name="Check Hide", default=True)
+    bpy.types.Scene.checkbox_anim = bpy.props.BoolProperty(name="Check Keyframe", default=True)
 
 def unregister():
     for cls in reversed(classes):
         bpy.utils.unregister_class(cls)
+
     del bpy.types.Scene.check_items
+    del bpy.types.Scene.checkbox_mani
+    del bpy.types.Scene.checkbox_transform
+    del bpy.types.Scene.checkbox_uv
+    del bpy.types.Scene.checkbox_normal
+    del bpy.types.Scene.checkbox_vert_overlap
+    del bpy.types.Scene.checkbox_ngone
+    del bpy.types.Scene.checkbox_hide
+    del bpy.types.Scene.checkbox_anim

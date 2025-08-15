@@ -157,16 +157,16 @@ def is_vertex_overlap(obj: bpy.types.Object, threshold=1e-5, select=False):
         bm = bmesh.new()
         bm.from_mesh(mesh)
 
+    # Use spatial hashing for faster lookup
+    hash_map = {}
     overlapping_verts = set()
-    verts = list(bm.verts)
-
-    for i in range(len(verts)):
-        v1 = verts[i]
-        for j in range(i + 1, len(verts)):
-            v2 = verts[j]
-            if (v1.co - v2.co).length < threshold:
-                overlapping_verts.add(v1)
-                overlapping_verts.add(v2)
+    for v in bm.verts:
+        key = (round(v.co.x / threshold), round(v.co.y / threshold), round(v.co.z / threshold))
+        if key in hash_map:
+            overlapping_verts.add(v)
+            overlapping_verts.add(hash_map[key])
+        else:
+            hash_map[key] = v
 
     indices = [v.index for v in overlapping_verts]
 
