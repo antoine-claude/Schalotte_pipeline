@@ -3,6 +3,7 @@ import bpy
 import importlib
 from . import utils
 importlib.reload(utils) 
+from . import addon_updater_ops
 
 class VIEW3D_PT_check_panel(bpy.types.Panel):
     bl_label = "Sanity Check"
@@ -14,7 +15,6 @@ class VIEW3D_PT_check_panel(bpy.types.Panel):
     def draw(self, context):
         layout = self.layout
     	
-        addon_updater_ops.check_for_update_background()
         scene = context.scene
         icon = 'ERROR' if scene.check_items else 'CHECKMARK'
 
@@ -120,3 +120,15 @@ class VIEW3D_PT_check_panel(bpy.types.Panel):
 
         layout.operator("object.run_check", text="Vérifier tous les objets")
 
+        # Vérification des updates en arrière-plan
+        addon_updater_ops.check_for_update_background()
+
+        layout.separator()
+        layout.label(text="Mises à jour", icon="IMPORT")
+
+        # Si une mise à jour est prête, afficher un message
+        if addon_updater_ops.updater.update_ready:
+            layout.label(text="Nouvelle mise à jour disponible !", icon="INFO")
+
+        # Boîte UI de l’updater (boutons update/check/etc.)
+        addon_updater_ops.update_notice_box_ui(self, context)
