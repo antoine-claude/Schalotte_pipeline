@@ -1340,6 +1340,7 @@ def register(bl_info):
         return
     updater.clear_state()  # Clear internal vars, avoids reloading oddities.
 
+    updater.addon = "schalotte_addon_updater"
     # Confirm your updater "engine" (Github is default if not specified).
     updater.engine = "Github"
     updater.user = "antoine-claude" # e.g. "theduckcow", should match repo url
@@ -1353,7 +1354,6 @@ def register(bl_info):
     # other considerations and suggestions from a security standpoint.
     updater.private_token = None  # "tokenstring"
 
-    # updater.addon = # define at top of module, MUST be done first
 
     # Website for manual addon download, optional but recommended to set.
     updater.website = "https://github.com/CGCookie/blender-addon-updater/"
@@ -1362,9 +1362,6 @@ def register(bl_info):
     # "sample/path/to/addon"
     # default is "" or None, meaning root
     updater.subfolder_path = ""
-
-    # Used to check/compare versions.
-    updater.current_version = bl_info["version"]
 
     # Optional, to hard-set update frequency, use this here - however, this
     # demo has this set via UI properties.

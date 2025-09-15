@@ -4,7 +4,6 @@ import importlib
 from . import utils
 importlib.reload(utils) 
 
-
 class VIEW3D_PT_check_panel(bpy.types.Panel):
     bl_label = "Sanity Check"
     bl_idname = "VIEW3D_PT_check_panel"
@@ -14,6 +13,8 @@ class VIEW3D_PT_check_panel(bpy.types.Panel):
     
     def draw(self, context):
         layout = self.layout
+    	
+        addon_updater_ops.check_for_update_background()
         scene = context.scene
         icon = 'ERROR' if scene.check_items else 'CHECKMARK'
 
