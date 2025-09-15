@@ -1,13 +1,14 @@
 
 bl_info = {
-    "name": "20STM Tools",
+    "name": "Check Scene STM",
     "author": "Antoine CLAUDE",
     "description": "Blender addon to check Scene",
-    "blender": (4, 4, 3),
+    "blender": (4, 5, 2),
     "version": (0, 1, 0),
 }
 import bpy
 import importlib
+from . import addon_updater_ops
 
 
 # Register les classes dynamiquement
@@ -18,8 +19,11 @@ def register():
     importlib.reload(ops)
     importlib.reload(panel_ui)
 
+    addon_updater_ops.register(bl_info)
+
     global classes
     classes = (
+        
         ops.CheckItem,
         ops.OBJECT_OT_run_check,
         ops.OBJECT_OT_select_manifold,
