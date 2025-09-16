@@ -86,7 +86,6 @@ def register():
 	global classes
 	classes = (
         DemoPreferences,
-		DemoUpdaterPanel,
         ops.CheckItem,
         ops.OBJECT_OT_run_check,
         ops.OBJECT_OT_select_manifold,
