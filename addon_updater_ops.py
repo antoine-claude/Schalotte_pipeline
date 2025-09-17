@@ -72,7 +72,7 @@ except Exception as e:
 # not match and have errors. Must be all lowercase and no spaces! Should also
 # be unique among any other addons that could exist (using this updater code),
 # to avoid clashes in operator registration.
-updater.addon = "addon_updater_demo"
+updater.addon = "check_scene_stm"
 
 
 # -----------------------------------------------------------------------------
@@ -1340,7 +1340,6 @@ def register(bl_info):
         return
     updater.clear_state()  # Clear internal vars, avoids reloading oddities.
 
-    updater.addon = "schalotte_addon_updater"
     # Confirm your updater "engine" (Github is default if not specified).
     updater.engine = "Github"
     updater.user = "antoine-claude" # e.g. "theduckcow", should match repo url
@@ -1356,7 +1355,7 @@ def register(bl_info):
 
 
     # Website for manual addon download, optional but recommended to set.
-    updater.website = "https://github.com/CGCookie/blender-addon-updater/"
+    updater.website = "https://github.com/antoine-claude/Schalotte_pipeline/"
 
     # Addon subfolder path.
     # "sample/path/to/addon"
