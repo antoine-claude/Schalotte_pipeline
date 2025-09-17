@@ -4,7 +4,7 @@ bl_info = {
     "author": "Antoine CLAUDE",
     "description": "Blender addon to check Scene",
     "blender": (4, 5, 2),
-    "version": (0, 1, 0),
+    "version": (0, 1, 0)
 }
 import bpy
 import importlib
@@ -126,3 +126,4 @@ def unregister():
 	del bpy.types.Scene.checkbox_ngone
 	del bpy.types.Scene.checkbox_hide
 	del bpy.types.Scene.checkbox_anim
+
