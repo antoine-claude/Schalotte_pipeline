@@ -13,10 +13,11 @@ import shutil
 
 # Destination path of addon build. For Windows filesystems be sure to use forward slashes, as backslashes may break the file path.
 # Make sure the destination folder does NOT exist before running the script.
-destination_path = 'C:/blender_pipeline'
+destination_path = 'C:/Users/claud/Downloads'
+
 
 # Version number of addon. NO trailing dot at the end. Should match bl_info in __init__.py
-version_number = '0.1.0'
+version_number = '0.1.1'
 
 # Automatically pack into .zip archive. Needed for installing the addon in Blender.
 pack_to_zip = True
@@ -25,8 +26,6 @@ pack_to_zip = True
 remove_unpacked_files_after_zip = True
 
 ##### CONFIG VARIABLES END ######
-
-
 
 
 # do not build files that match following patterns, to exclude development files that the end user does not need

@@ -118,17 +118,15 @@ class VIEW3D_PT_check_panel(bpy.types.Panel):
                         op = row.operator("object.clean_anim", icon="TRASH")
                         op.target_name = item.object_name
 
-        layout.operator("object.run_check", text="Vérifier tous les objets")
+        layout.operator("object.run_check", text="Check all objects")
 
-        # Vérification des updates en arrière-plan
+        # CHecking updates in background
         addon_updater_ops.check_for_update_background()
 
-        layout.separator()
-        layout.label(text="Mises à jour", icon="IMPORT")
-
-        # Si une mise à jour est prête, afficher un message
+        # If a update is available, display a message
         if addon_updater_ops.updater.update_ready:
-            layout.label(text="Nouvelle mise à jour disponible !", icon="INFO")
+            layout.separator()
+            layout.label(text="New Update available !", icon="IMPORT")
 
-        # Boîte UI de l’updater (boutons update/check/etc.)
+        #UI Box updater (bouttons update/check/etc.)
         addon_updater_ops.update_notice_box_ui(self, context)
